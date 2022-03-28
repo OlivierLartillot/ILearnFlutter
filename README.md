@@ -20,10 +20,10 @@ for example :
 
 in this part, i learn how to use this following widgets :
 
-- ElevatedButton
+- ElevatedButton (to hide or show text)
 - TextField (String and int with int.parse())
-- Switch
-- Slider
-- Checkboxes
-- Radio
+- Switch (a switch button to choose the gender)
+- Slider (to choose the height)
+- Checkboxes (to choose the favorite activities)
+- Radio (to chose The Favorite computered language)
 
