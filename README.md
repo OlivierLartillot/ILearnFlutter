@@ -8,8 +8,13 @@ I follow the course and i do some exercices to improve myself
 
 This file is the class of the User Profile object. 
 
-I modified an ambiguous part of the course by a better definition of getters and setters. 
-I modified the updateUser() function to use getters and setters without redefining the user profile object.
+I modified an ambiguous part of the course by a better definition of getters and setters. this allowed me to use these getters/setters directly in the main.dart functions. It felt fairer to me as an object language.
+I modified the updateUser() function in main.dart to use getters and setters without redefining the user profile object.
+
+for example :
+```dart
+  (secret.text != myProfile.getSecret()) ? myProfile.setSecret(secret.text) : myProfile.getSecret();
+```
 
 ## the interactive widgets
 
