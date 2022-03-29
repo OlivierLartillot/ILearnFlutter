@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:exercice_widgets_interactifs/Profile.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget
 {
@@ -22,7 +24,8 @@ class ProfilePageState extends State<ProfilePage>
   late TextEditingController secret;
   late TextEditingController age;
 
-
+  ImagePicker picker = ImagePicker();
+  File? imageFile;
   bool showSecret = false;
   Map<String, bool> listHobbies = {
     "Pétanque": false,
@@ -82,9 +85,42 @@ class ProfilePageState extends State<ProfilePage>
 
                           children: [
                             Text(myProfile.getName()),
-                            Text(myProfile.getAge()),
-                            Text("Genre : ${myProfile.getGender()}"),
-                            Text(myProfile.getHeight()),
+
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+
+                                Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20, bottom:20),
+                                      padding: EdgeInsets.all(4),
+                                      decoration : BoxDecoration(
+                                        color: Colors.black,
+                                      border: Border.all(
+                                      color: Colors.black,
+                                        width: 1,
+                                      ),
+                                       borderRadius: BorderRadius.circular(8),
+                                     ),
+
+                                      child: (imageFile==null)? Text("Aucune image") : Image.file(imageFile!, height: MediaQuery.of(context).size.width / 4,),
+                                    ),
+
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(myProfile.getAge()),
+                                    Text(myProfile.getHeight()),
+                                    Text("Genre : ${myProfile.getGender()}"),
+
+                                  ],
+                                ),
+                              ],
+                            ),
+
                             Text(myProfile.getHobbies()),
                             Text(myProfile.getFavoriteLang()),
                             ElevatedButton(
@@ -98,9 +134,17 @@ class ProfilePageState extends State<ProfilePage>
                           ],
                         ),
                     )
-
-
-
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(onPressed: (() =>
+                        pickImage(source: ImageSource.camera)
+                      ), icon: Icon(Icons.camera_enhance, color: Colors.deepPurple,)),
+                      IconButton(onPressed: (() =>
+                          pickImage(source: ImageSource.gallery)
+                      ), icon: Icon(Icons.photo_album, color: Colors.deepPurple))
+                    ],
                   ),
                   Divider(color: Colors.deepPurpleAccent, thickness: 2,),
 
@@ -120,7 +164,6 @@ class ProfilePageState extends State<ProfilePage>
                       myTextField(
                           controller: surname,
                           hint: "Entre ton prénom"
-
                       ),
                       myTextField(
                           controller: name,
@@ -130,6 +173,8 @@ class ProfilePageState extends State<ProfilePage>
 
                       TextField(
                         controller: age,
+                        decoration: InputDecoration(hintText: "Entre Ton Age",),
+                        keyboardType: TextInputType.number,
                         onSubmitted: ((newValue) {
                           setState(() {
                             updateUser();
@@ -303,11 +348,7 @@ Column myHobbies () {
                             });
                           })),
                     ]
-
-
               );
-
-
 
               radiosList.add(c);
             }
@@ -316,6 +357,20 @@ Column myHobbies () {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: radiosList,);
 
+  }
+  /*
+  * function to get the pick Image
+  */
+  Future pickImage({required ImageSource source}) async {
+    final XFile? chosenImage = await picker.pickImage(source: source);
+    setState(() {
+      if (chosenImage == null) {
+        print("Nous n avons pas pu récupéré d image");
+      }
+      else {
+        imageFile = File(chosenImage.path);
+      }
+    });
   }
 
 
