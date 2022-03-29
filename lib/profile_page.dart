@@ -82,9 +82,36 @@ class ProfilePageState extends State<ProfilePage>
 
                           children: [
                             Text(myProfile.getName()),
-                            Text(myProfile.getAge()),
-                            Text("Genre : ${myProfile.getGender()}"),
-                            Text(myProfile.getHeight()),
+
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+
+                                Column(
+                                  children: [
+
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(myProfile.getAge()),
+                                    Text(myProfile.getHeight()),
+                                    Text("Genre : ${myProfile.getGender()}"),
+
+                                  ],
+                                ),
+
+
+
+                              ],
+                            ),
+
+
+
+
+
+
                             Text(myProfile.getHobbies()),
                             Text(myProfile.getFavoriteLang()),
                             ElevatedButton(
@@ -120,7 +147,6 @@ class ProfilePageState extends State<ProfilePage>
                       myTextField(
                           controller: surname,
                           hint: "Entre ton prénom"
-
                       ),
                       myTextField(
                           controller: name,
@@ -130,6 +156,8 @@ class ProfilePageState extends State<ProfilePage>
 
                       TextField(
                         controller: age,
+                        decoration: InputDecoration(hintText: "Entre Ton Age",),
+                        keyboardType: TextInputType.number,
                         onSubmitted: ((newValue) {
                           setState(() {
                             updateUser();
