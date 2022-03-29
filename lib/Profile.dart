@@ -29,7 +29,7 @@ Profile ({
     return this.name;
   }
 
-  String getName() => "$surname $name";
+  String getName() => this.surname + " "  + this.name;
   String getAge() {
     String ageString = "Age: $age an";
     if (age>1) {
